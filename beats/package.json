@@ -1,10 +1,11 @@
 {
-  "name": "beats",
+  "name": "djim-beats",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-icons": "^3.4.0",
     "react-scripts": "2.1.5"
   },
   "scripts": {
