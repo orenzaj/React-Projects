@@ -33,9 +33,13 @@ class BeatsContainer extends React.Component {
         }
     }
     renderPlusSquare() {
+        const handleClick = this.props.measures > 0
+            ? this.props.incrementMeasureCount
+            : this.props.setModalType
         return (
             <FaPlusSquare className="add_row"
-                onClick={this.props.incrementMeasureCount}
+                id="add_measure"
+                onClick={handleClick}
             />
         );
     }

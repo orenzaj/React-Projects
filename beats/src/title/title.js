@@ -1,24 +1,59 @@
 import React from 'react';
+import { FaEdit } from 'react-icons/fa';
+
 import './title.css';
 
 class TitleContainer extends React.Component {
     render() {
-        return React.createElement(
-            'div', { className: "title_container" },
-            <TextBox type="h2" key={this.props.title} className="title" value={this.props.title}/>,
-            <TextBox type="span" key={this.props.subtitle} className="subtitle" value={this.props.subtitle}/>
+        const {
+            title,
+            subtitle,
+            state,
+            openModal
+        } = this.props
+        return (
+            <div className="title_container">
+                <TextBox key={title}
+                    tag="h2"
+                    className="title"
+                    state={state}
+                    handleClick={openModal}
+                />
+                <TextBox key={subtitle}
+                    tag="span"
+                    className="subtitle"
+                    state={state}
+                    handleClick={openModal}
+                />
+            </div>
         );
     }
 }
 
 class TextBox extends React.Component {
     render() {
+        const { tag, className, state } = this.props
         return React.createElement(
-            this.props.type, {
-                className: this.props.className,
-                value: this.props.value
-            }, this.props.value
+            tag, { className },
+            state[className],
+            this.renderEditButton()
         );
+    }
+    renderEditButton() {
+        return React.createElement(
+            FaEdit, {
+                className: "edit_button",
+                type: "open",
+                onClick: () => this.setLabels()
+            }
+        )
+    }
+    setLabels() {
+        const { className, handleClick } = this.props
+        const { modalLabels } = this.props.state
+        modalLabels.length = 0
+        modalLabels.push(className)
+        return handleClick()
     }
 }
 

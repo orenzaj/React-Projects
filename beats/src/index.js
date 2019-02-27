@@ -23,7 +23,24 @@ class AppContainer extends React.Component {
             1: ["drum", "shekere", "Ghana"],
             2: ["Tubano"]
         },
-        modalType: "edit_title"
+        modalType: "",
+        modalLabels: [],
+        modalInputs: []
+    }
+    closeModal = () => {
+        this.setState({ modalType: "" })
+        this.setState({ modalLabels: [] })
+        this.setState({ modalInputs: [] })
+    }
+    openModal = () => {
+        this.setState({ modalType: "open" })
+    }
+    submitModalInputs = () => {
+        const { modalLabels, modalInputs } = this.state
+        const state = {}
+        state[modalLabels[0]] = modalInputs[0]
+        this.setState(state)
+        this.closeModal()
     }
     getSoundRows = () => {
         const soundRows = {}
@@ -69,11 +86,6 @@ class AppContainer extends React.Component {
     incrementSoundRowCount = () => {
         this.setState({ soundRowCount: this.state.soundRowCount + 1 })
     }
-    actions = {
-        "changeTitle": (title) => {
-            this.setState({ title })
-        }
-    }
     componentWillMount() {
         this.decrementNoteValue.bind(this)
         this.incrementNoteValue.bind(this)
@@ -83,7 +95,8 @@ class AppContainer extends React.Component {
         this.incrementSoundCardCount.bind(this)
         this.decrementSoundRowCount.bind(this)
         this.incrementSoundRowCount.bind(this)
-        this.actions.changeTitle.bind(this)
+        this.closeModal.bind(this)
+        this.openModal.bind(this)
     }
     render() {
         return React.createElement(
@@ -92,12 +105,15 @@ class AppContainer extends React.Component {
             <TitleContainer key="title_container"
                 title={this.state.title}
                 subtitle={this.state.subtitle}
+                state={this.state}
+                openModal={this.openModal}
             />,
             <BeatsContainer key="beats_container"
                 measures={this.state.measureCount}
                 bpm={this.state.beatsPerMeasure}
                 decrementMeasureCount={this.decrementMeasureCount}
                 incrementMeasureCount={this.incrementMeasureCount}
+                setModalType={this.setModalType}
             />,
             <SoundsContainer key="sounds_container"
                 noteValue={this.state.noteValue}
@@ -110,7 +126,8 @@ class AppContainer extends React.Component {
             <ModalContainer key="modal_container"
                 modalType={this.state.modalType}
                 state={this.state}
-                actions={this.actions}
+                closeModal={this.closeModal}
+                submitModalInputs={this.submitModalInputs}
             />
         );
     }
