@@ -10,7 +10,9 @@ import './index.css';
 class AppContainer extends React.Component {
     state = {
         measureCount: 1,
+        maxMeasures: 4,
         beatsPerMeasure: 4,
+        maxBpm: 4,
         soundRowCount: 1,
         soundCardCount: 0,
         maxCards: 6,
@@ -36,11 +38,22 @@ class AppContainer extends React.Component {
         this.setState({ modalType: "open" })
     }
     submitModalInputs = () => {
-        const { modalLabels, modalInputs } = this.state
         const state = {}
-        state[modalLabels[0]] = modalInputs[0]
-        this.setState(state)
-        this.closeModal()
+        const {
+            modalLabels,
+            modalInputs,
+            maxBpm,
+        } = this.state
+        if (modalLabels[0] === "beatsPerMeasure" && modalInputs[0] <= maxBpm) {
+            state[modalLabels[0]] = modalInputs[0]
+            this.setState(state)
+            this.closeModal()
+            this.incrementMeasureCount()
+        } else if (modalLabels[0] === "title" || modalLabels[0] === "subtitle") {
+            state[modalLabels[0]] = modalInputs[0]
+            this.setState(state)
+            this.closeModal()
+        }
     }
     getSoundRows = () => {
         const soundRows = {}
@@ -72,7 +85,9 @@ class AppContainer extends React.Component {
         this.setState({ measureCount: this.state.measureCount - 1 })
     }
     incrementMeasureCount = () => {
-        this.setState({ measureCount: this.state.measureCount + 1 })
+        if (this.state.measureCount <= this.state.maxMeasures) {
+            this.setState({ measureCount: this.state.measureCount + 1 })
+        }
     }
     decrementSoundCardCount = () => {
         this.setState({ soundCardCount: this.state.soundCardCount - 1 })
@@ -97,23 +112,21 @@ class AppContainer extends React.Component {
         this.incrementSoundRowCount.bind(this)
         this.closeModal.bind(this)
         this.openModal.bind(this)
+        this.submitModalInputs.bind(this)
     }
     render() {
         return React.createElement(
             'div',
             { className: "djim-beats-container" },
             <TitleContainer key="title_container"
-                title={this.state.title}
-                subtitle={this.state.subtitle}
                 state={this.state}
                 openModal={this.openModal}
             />,
             <BeatsContainer key="beats_container"
-                measures={this.state.measureCount}
-                bpm={this.state.beatsPerMeasure}
+                state={this.state}
                 decrementMeasureCount={this.decrementMeasureCount}
                 incrementMeasureCount={this.incrementMeasureCount}
-                setModalType={this.setModalType}
+                openModal={this.openModal}
             />,
             <SoundsContainer key="sounds_container"
                 noteValue={this.state.noteValue}
@@ -124,7 +137,6 @@ class AppContainer extends React.Component {
                 decrementSoundCardCount={this.decrementSoundCardCount}
             />,
             <ModalContainer key="modal_container"
-                modalType={this.state.modalType}
                 state={this.state}
                 closeModal={this.closeModal}
                 submitModalInputs={this.submitModalInputs}

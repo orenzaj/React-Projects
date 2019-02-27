@@ -14,34 +14,45 @@ class BeatsContainer extends React.Component {
         );
     }
     renderMinusSquare() {
-        if (this.props.measures > 0) {
+        const { measureCount } = this.props.state
+        const { decrementMeasureCount } = this.props
+        if (measureCount > 0) {
             return (
                 <FaMinusSquare className="minus_row"
-                    onClick={this.props.decrementMeasureCount}
+                    onClick={decrementMeasureCount}
                 />
             );
         }
     }
     renderRowContainer() {
-        if (this.props.measures > 0){
+        const { beatsPerMeasure, measureCount } = this.props.state
+        if (measureCount > 0){
             return (
                 <BeatRowContainer key="beat_row_container"
-                    bpm={this.props.bpm}
-                    measures={this.props.measures}
+                    bpm={beatsPerMeasure}
+                    measures={measureCount}
                 />
             );
         }
     }
     renderPlusSquare() {
-        const handleClick = this.props.measures > 0
-            ? this.props.incrementMeasureCount
-            : this.props.setModalType
         return (
             <FaPlusSquare className="add_row"
                 id="add_measure"
-                onClick={handleClick}
+                onClick={(event) => {this.handleClick(event)}}
             />
-        );
+        )
+    }
+    handleClick(event) {
+        const { measureCount, modalLabels } = this.props.state
+        const { incrementMeasureCount, openModal } = this.props
+        if (measureCount === 0) {
+            modalLabels.length = 0
+            modalLabels.push("beatsPerMeasure")
+            return openModal()
+        }
+        return incrementMeasureCount()
+
     }
 }
 

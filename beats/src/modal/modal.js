@@ -4,7 +4,7 @@ import './modal.css';
 
 class ModalContainer extends React.Component {
     render() {
-        if (this.props.modalType !== "open") {
+        if (this.props.state.modalType !== "open") {
             return <div className="modal_placeholder"></div>
         }
         return (

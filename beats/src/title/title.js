@@ -5,21 +5,16 @@ import './title.css';
 
 class TitleContainer extends React.Component {
     render() {
-        const {
-            title,
-            subtitle,
-            state,
-            openModal
-        } = this.props
+        const { state, openModal } = this.props
         return (
             <div className="title_container">
-                <TextBox key={title}
+                <TextBox key={state.title}
                     tag="h2"
                     className="title"
                     state={state}
                     handleClick={openModal}
                 />
-                <TextBox key={subtitle}
+                <TextBox key={state.subtitle}
                     tag="span"
                     className="subtitle"
                     state={state}
