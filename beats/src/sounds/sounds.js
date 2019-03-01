@@ -20,7 +20,10 @@ class SoundsContainer extends React.Component {
         const { rows } = this.props
         if (Object.keys(rows).length > 0) {
             return (
-                <FaMinusSquare className="minus_card"/>
+                <FaMinusSquare className="remove_card"
+                    label="Remove Card"
+                    onClick={(event) => {this.handleClick(event)}}
+                />
             );
         }
     }
@@ -48,13 +51,13 @@ class SoundsContainer extends React.Component {
     renderPlusSquare() {
         return (
             <FaPlusSquare className="add_card"
-                label="new_card"
-                onClick={(event) => {this.addNewSoundCard(event)}}
+                label="Add Card"
+                onClick={(event) => {this.handleClick(event)}}
             />
         );
     }
 
-    addNewSoundCard(event) {
+    handleClick(event) {
         const { openModal } = this.props
         const { modalLabels } = this.props.state
         const { currentTarget } = event

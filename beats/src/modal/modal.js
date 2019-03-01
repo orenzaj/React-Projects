@@ -56,7 +56,7 @@ class ModalLabel extends React.Component {
     render() {
         const { label } = this.props
         return (
-            <label className="modal_label"> {label.split("_")[1]} </label>
+            <label className="modal_label"> {label} </label>
         )
     }
 }
@@ -64,8 +64,9 @@ class ModalLabel extends React.Component {
 class ModalInput extends React.Component {
     render() {
         const { value, label } = this.props
+        const id = label.toLowerCase().replace(" ", "_")
         return (
-            <input type="text "className="modal_input" id={ label }
+            <input type="text" className="modal_input" id={ id }
                 placeholder={ value }
                 onChange={(event) => this.changeModalInputs(event)}
             />

@@ -18,7 +18,8 @@ class BeatsContainer extends React.Component {
         const { decrementMeasureCount } = this.props
         if (measureCount > 0) {
             return (
-                <FaMinusSquare className="minus_row"
+                <FaMinusSquare className="remove_measure"
+                    id="remove_measure"
                     onClick={decrementMeasureCount}
                 />
             );
@@ -36,19 +37,22 @@ class BeatsContainer extends React.Component {
         }
     }
     renderPlusSquare() {
-        return (
-            <FaPlusSquare className="add_row"
-                id="add_measure"
-                onClick={(event) => {this.handleClick(event)}}
-            />
-        )
+        const { measureCount, maxMeasures } = this.props.state
+        if ( measureCount < maxMeasures ) {
+            return (
+                <FaPlusSquare className="add_measure"
+                    id="add_measure"
+                    onClick={(event) => {this.handleClick(event)}}
+                />
+            )
+        }
     }
     handleClick(event) {
         const { measureCount, modalLabels } = this.props.state
         const { incrementMeasureCount, openModal } = this.props
         if (measureCount === 0) {
             modalLabels.length = 0
-            modalLabels.push("new_bpm")
+            modalLabels.push("Beats Per Measure")
             return openModal()
         }
         return incrementMeasureCount()

@@ -13,7 +13,7 @@ class TitleContainer extends React.Component {
                     value={title}
                     tag="h2"
                     className="title"
-                    label="new_title"
+                    label="New Title"
                     state={this.props.state}
                     handleClick={openModal}
                 />
@@ -21,7 +21,7 @@ class TitleContainer extends React.Component {
                     value={subtitle}
                     tag="span"
                     className="subtitle"
-                    label="new_subtitle"
+                    label="New Subtitle"
                     state={this.props.state}
                     handleClick={openModal}
                 />

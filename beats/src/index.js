@@ -12,7 +12,7 @@ class AppContainer extends React.Component {
     initializeState() {
         return {
             measureCount: 0,
-            maxMeasures: 4,
+            maxMeasures: 3,
             beatsPerMeasure: 4,
             maxBpm: 4,
             soundRowCount: 1,
@@ -53,27 +53,34 @@ class AppContainer extends React.Component {
             noteValue,
             noteValues
         } = this.state
-
-        if (modalLabels[0] === "new_bpm" && modalInputs[0] <= maxBpm) {
-            state["beatsPerMeasure"] = modalInputs[0]
+        const [ label ] = modalLabels
+        const [ input ] = modalInputs
+        if (label === "Beats Per Measure" && input <= maxBpm) {
+            state["beatsPerMeasure"] = input
             this.setState(state)
             this.closeModal()
             this.incrementMeasureCount()
-        } else if (modalLabels[0] === "new_title") {
-            state["title"] = modalInputs[0]
+        } else if (label === "New Title") {
+            state["title"] = input
             this.setState(state)
             this.closeModal()
-        } else if (modalLabels[0] === "new_subtitle") {
-            state["subtitle"] = modalInputs[0]
+        } else if (label === "New Subtitle") {
+            state["subtitle"] = input
             this.setState(state)
             this.closeModal()
-        } else if (modalLabels[0] === "new_card"
-                && rows.indexOf(modalInputs[0]) < 0) {
+        } else if (label === "Add Card"
+                && rows.indexOf(input) === -1) {
             if (!noteValues[noteValue]) {
                 noteValues[noteValue] = []
             }
-            noteValues[noteValue].push(modalInputs[0])
+            noteValues[noteValue].push(input)
             this.closeModal()
+        } else if (label === "Remove Card" ) {
+            const index = rows.indexOf(input)
+            if (index > -1) {
+                noteValues[noteValue].splice(index, 1)
+                this.closeModal()
+            }
         }
     }
     getSoundRows = () => {
@@ -106,9 +113,7 @@ class AppContainer extends React.Component {
         this.setState({ measureCount: this.state.measureCount - 1 })
     }
     incrementMeasureCount = () => {
-        if (this.state.measureCount <= this.state.maxMeasures) {
-            this.setState({ measureCount: this.state.measureCount + 1 })
-        }
+        this.setState({ measureCount: this.state.measureCount + 1 })
     }
     componentWillMount() {
         this.decrementNoteValue.bind(this)
