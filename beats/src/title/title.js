@@ -9,14 +9,16 @@ class TitleContainer extends React.Component {
         const { title, subtitle } = this.props.state
         return (
             <div className="title_container">
-                <TextBox key={title}_key
+                <TextBox
+                    value={title}
                     tag="h2"
                     className="title"
                     label="new_title"
                     state={this.props.state}
                     handleClick={openModal}
                 />
-                <TextBox key={subtitle}_key
+                <TextBox
+                    value={subtitle}
                     tag="span"
                     className="subtitle"
                     label="new_subtitle"
@@ -30,10 +32,10 @@ class TitleContainer extends React.Component {
 
 class TextBox extends React.Component {
     render() {
-        const { tag, className } = this.props
+        const { tag, className, state } = this.props
         return React.createElement(
             tag, { className },
-            this.props.state[className],
+            state[className],
             this.renderEditButton()
         );
     }
@@ -49,7 +51,6 @@ class TextBox extends React.Component {
         );
     }
     setLabels(event) {
-        console.log(this.props)
         const { handleClick } = this.props
         const { modalLabels } = this.props.state
         const { currentTarget } = event

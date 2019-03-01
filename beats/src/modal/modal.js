@@ -37,10 +37,9 @@ class ModalContainer extends React.Component {
         const { state } = this.props
         const { modalLabels, modalInputs } = state
         modalLabels.forEach(label => {
-            groups.push(
-                <ModalLabel key={label}_label label={label}/>)
-            groups.push(
-                <ModalInput key={label}_input
+            groups.push(<ModalLabel key={label}
+                    label={label}/>)
+            groups.push(<ModalInput key={modalInputs}
                     label={label}
                     inputs={modalInputs}
                     value={state[label]}/>)
