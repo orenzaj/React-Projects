@@ -4,7 +4,8 @@ import './modal.css';
 
 class ModalContainer extends React.Component {
     render() {
-        if (this.props.state.modalType !== "open") {
+        const { modalType } = this.props.state
+        if (modalType !== "open") {
             return <div className="modal_placeholder"></div>
         }
         return (
@@ -15,7 +16,8 @@ class ModalContainer extends React.Component {
         )
     }
     renderCloseButton() {
-        return <button type="close" onClick={ this.props.closeModal }> X </button>
+        const { closeModal } = this.props
+        return <button type="close" onClick={ closeModal }> X </button>
     }
     renderForm() {
         return (
@@ -32,11 +34,16 @@ class ModalContainer extends React.Component {
     }
     renderFormGroup() {
         const groups = []
-        const { modalLabels, modalInputs } = this.props.state
+        const { state } = this.props
+        const { modalLabels, modalInputs } = state
         modalLabels.forEach(label => {
-            groups.push(<ModalLabel key={label}_label label={label}/>)
-            groups.push(<ModalInput key={label}_input label={label}
-                inputs={modalInputs} value={this.props.state[label]}/>)
+            groups.push(
+                <ModalLabel key={label}_label label={label}/>)
+            groups.push(
+                <ModalInput key={label}_input
+                    label={label}
+                    inputs={modalInputs}
+                    value={state[label]}/>)
         })
         return groups
     }
@@ -48,17 +55,19 @@ class ModalContainer extends React.Component {
 
 class ModalLabel extends React.Component {
     render() {
+        const { label } = this.props
         return (
-            <label className="modal_label"> {this.props.label} </label>
+            <label className="modal_label"> {label.split("_")[1]} </label>
         )
     }
 }
 
 class ModalInput extends React.Component {
     render() {
+        const { value, label } = this.props
         return (
-            <input type="text "className="modal_label" id={ this.props.label }
-                placeholder={ this.props.value }
+            <input type="text "className="modal_input" id={ label }
+                placeholder={ value }
                 onChange={(event) => this.changeModalInputs(event)}
             />
         )

@@ -29,10 +29,13 @@ class AppContainer extends React.Component {
         modalLabels: [],
         modalInputs: []
     }
-    closeModal = () => {
-        this.setState({ modalType: "" })
+    clearModalFields() {
         this.setState({ modalLabels: [] })
         this.setState({ modalInputs: [] })
+    }
+    closeModal = () => {
+        this.clearModalFields()
+        this.setState({ modalType: "" })
     }
     openModal = () => {
         this.setState({ modalType: "open" })
@@ -44,12 +47,20 @@ class AppContainer extends React.Component {
             modalInputs,
             maxBpm,
         } = this.state
-        if (modalLabels[0] === "beatsPerMeasure" && modalInputs[0] <= maxBpm) {
+        if (modalLabels[0] === "new_bpm" && modalInputs[0] <= maxBpm) {
             state[modalLabels[0]] = modalInputs[0]
             this.setState(state)
             this.closeModal()
             this.incrementMeasureCount()
-        } else if (modalLabels[0] === "title" || modalLabels[0] === "subtitle") {
+        } else if (modalLabels[0] === "new_title") {
+            state["title"] = modalInputs[0]
+            this.setState(state)
+            this.closeModal()
+        } else if (modalLabels[0] === "new_subtitle") {
+            state["subtitle"] = modalInputs[0]
+            this.setState(state)
+            this.closeModal()
+        } else if (modalLabels[0] === "new" || modalLabels[0] === "subtitle") {
             state[modalLabels[0]] = modalInputs[0]
             this.setState(state)
             this.closeModal()
@@ -129,12 +140,13 @@ class AppContainer extends React.Component {
                 openModal={this.openModal}
             />,
             <SoundsContainer key="sounds_container"
-                noteValue={this.state.noteValue}
+                state={this.state}
+                rows={this.getSoundRows()}
                 incrementNoteValue={this.incrementNoteValue}
                 decrementNoteValue={this.decrementNoteValue}
-                rows={this.getSoundRows()}
                 incrementSoundCardCount={this.incrementSoundCardCount}
                 decrementSoundCardCount={this.decrementSoundCardCount}
+                openModal={this.openModal}
             />,
             <ModalContainer key="modal_container"
                 state={this.state}

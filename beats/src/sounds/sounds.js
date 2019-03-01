@@ -10,43 +10,57 @@ class SoundsContainer extends React.Component {
         return (
             <div className="sounds_container">
                 {this.renderMinusSquare()}
-                {this.renderNavContainer()}
                 {this.renderSoundCardContainer()}
                 {this.renderPlusSquare()}
+                {this.renderNavContainer()}
             </div>
         );
     }
-    renderSoundCardContainer() {
-        if (Object.keys(this.props.rows).length > 0) {
+    renderMinusSquare() {
+        const { rows } = this.props
+        if (Object.keys(rows).length > 0) {
             return (
-                <SoundCardContainer key="sound_card_container" rows={this.props.rows}/>
+                <FaMinusSquare className="minus_card"/>
+            );
+        }
+    }
+    renderSoundCardContainer() {
+        const { rows } = this.props
+        if (Object.keys(rows).length > 0) {
+            return (
+                <SoundCardContainer key="sound_card_container" rows={rows}/>
             );
         }
     }
 
     renderNavContainer() {
+        const { incrementNoteValue, decrementNoteValue } = this.props
+        const { noteValue } = this.props.state
         return (
-            <NavContainer key="nav_container" noteValue={this.props.noteValue}
-                incrementNoteValue={this.props.incrementNoteValue}
-                decrementNoteValue={this.props.decrementNoteValue}
+            <NavContainer key="nav_container"
+                noteValue={noteValue}
+                incrementNoteValue={incrementNoteValue}
+                decrementNoteValue={decrementNoteValue}
             />
         );
     }
-    renderMinusSquare() {
-        if (Object.keys(this.props.rows).length > 0) {
-            return (
-                <FaMinusSquare className="minus_card"
-                    onClick={this.props.decrementSoundCardCount}
-                />
-            );
-        }
-    }
+
     renderPlusSquare() {
         return (
             <FaPlusSquare className="add_card"
-                onClick={this.props.incrementSoundCardCount}
+                label="new_card"
+                onClick={(event) => {this.addNewSoundCard(event)}}
             />
         );
+    }
+
+    addNewSoundCard(event) {
+        const { openModal } = this.props
+        const { modalLabels } = this.props.state
+        const { currentTarget } = event
+        modalLabels.length = 0
+        modalLabels.push(currentTarget.getAttribute("label"))
+        return openModal()
     }
 }
 

@@ -48,7 +48,7 @@ class BeatsContainer extends React.Component {
         const { incrementMeasureCount, openModal } = this.props
         if (measureCount === 0) {
             modalLabels.length = 0
-            modalLabels.push("beatsPerMeasure")
+            modalLabels.push("new_bpm")
             return openModal()
         }
         return incrementMeasureCount()

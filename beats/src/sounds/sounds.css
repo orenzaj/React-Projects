@@ -35,3 +35,11 @@
     width: 60px;
     border: 2px solid #e8cb2fad;
 }
+
+.add_card {
+    z-index: 2;
+}
+
+.minus_card {
+    z-index: 2;
+}
