@@ -51,7 +51,7 @@ class SoundsContainer extends React.Component {
 	const rows = this.props.getSoundRows()
 	return Object.keys(rows).map((row, index) => {
 	    return (
-		<div className="sound_row" row={index}>
+		<div className="sound_row" key={row} row={index}>
 		    {this.renderCards(cards)}
 		</div>
 	    )
@@ -60,7 +60,9 @@ class SoundsContainer extends React.Component {
     renderCards(cards) {
 	return cards.map((card, index) => {
 	    return (
-		<div className="sound_card" card={index}>{card}</div>
+		<div className="sound_card" key={card} card={index}>
+		    {card}
+		</div>
 	    )
 	});
     }

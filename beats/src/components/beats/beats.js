@@ -27,7 +27,6 @@ class BeatsContainer extends React.Component {
     }
     renderRowContainer() {
         const { measureCount } = this.props.state
-	const rows = this.renderRows()
         if (measureCount > 0){
    	    return (
 	        <div className="beat_row_container">
@@ -40,7 +39,7 @@ class BeatsContainer extends React.Component {
         const rows = []
         for (let row = 1; row <= measures; row += 1) {
 	    rows.push(
-		<div className="beat_row" row={row}>
+		<div key={row} className="beat_row" row={row}>
 		    {this.renderBoxes()}
 		</div>
 	    )
@@ -52,7 +51,7 @@ class BeatsContainer extends React.Component {
         const boxes = []
         for (let box = 1; box <= beatsPerMeasure; box += 1) {
      	    boxes.push(
-     	    	<div className="beat_box" box={box}>
+     	    	<div key={box} className="beat_box" box={box}>
 		    {box}
      	    	</div>)
         }
