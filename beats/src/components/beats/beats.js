@@ -26,15 +26,37 @@ class BeatsContainer extends React.Component {
         }
     }
     renderRowContainer() {
-        const { beatsPerMeasure, measureCount } = this.props.state
+        const { measureCount } = this.props.state
+	const rows = this.renderRows()
         if (measureCount > 0){
-            return (
-                <BeatRowContainer key="beat_row_container"
-                    bpm={beatsPerMeasure}
-                    measures={measureCount}
-                />
-            );
+   	    return (
+	        <div className="beat_row_container">
+		    {this.renderRows(measureCount)}
+	        </div>
+	    )
         }
+    }
+    renderRows(measures) {
+        const rows = []
+        for (let row = 1; row <= measures; row += 1) {
+	    rows.push(
+		<div className="beat_row" row={row}>
+		    {this.renderBoxes()}
+		</div>
+	    )
+        }
+        return rows
+    }
+    renderBoxes(row) {
+        const { beatsPerMeasure } = this.props.state
+        const boxes = []
+        for (let box = 1; box <= beatsPerMeasure; box += 1) {
+     	    boxes.push(
+     	    	<div className="beat_box" box={box}>
+		    {box}
+     	    	</div>)
+        }
+        return boxes
     }
     renderPlusSquare() {
         const { measureCount, maxMeasures } = this.props.state
@@ -56,54 +78,6 @@ class BeatsContainer extends React.Component {
             return openModal()
         }
         return incrementMeasureCount()
-
-    }
-}
-
-class BeatRowContainer extends React.Component {
-    render() {
-        return (
-            React.createElement(
-                'div', { className: "beat_row_container" },
-                this.renderRows()
-            )
-        );
-    }
-    renderRows() {
-        const rows = []
-        for (let row = 1; row <= this.props.measures; row += 1) {
-            rows.push(
-                <BeatRow key={row} row={row} bpm={this.props.bpm}/>
-            )
-        }
-        return rows
-    }
-}
-
-class BeatRow extends React.Component {
-    render() {
-        return (
-            <div className="beat_row" row={this.props.row}>
-                {this.renderBoxes()}
-            </div>
-        );
-    }
-    renderBoxes() {
-        const boxes = []
-        for (let box = 1; box <= this.props.bpm; box += 1) {
-            boxes.push(<BeatBox key={box} box={box}/>)
-        }
-        return boxes
-    }
-}
-
-class BeatBox extends React.Component {
-    render() {
-        return (
-            <div className="beat_box" box={this.props.box}>
-                {this.props.box}
-            </div>
-        );
     }
 }
 
