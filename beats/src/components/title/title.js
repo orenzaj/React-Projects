@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaEdit } from 'react-icons/fa';
 
-import './title.css';
+import '../App.css';
 
 class TitleContainer extends Component {
     render() {

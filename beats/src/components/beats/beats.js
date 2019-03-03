@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 
-import './beats.css'
+import '../App.css'
 
 class BeatsContainer extends React.Component {
     render() {

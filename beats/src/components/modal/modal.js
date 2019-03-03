@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './modal.css';
+import '../App.css';
 
 class ModalContainer extends React.Component {
     render() {

@@ -2,8 +2,8 @@ import React from 'react';
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 
 import NavContainer from '../nav/nav.js';
-import './sounds.css';
 
+import '../App.css';
 
 class SoundsContainer extends React.Component {
     render() {
