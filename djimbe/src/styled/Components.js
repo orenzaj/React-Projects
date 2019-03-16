@@ -11,18 +11,14 @@ export const AppContainer = styled.div`
 export const SongContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 50px;
+  height: 80px;
   width: 80%;
 `;
 
-export const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
+export const TitleContainer = styled.div`
   font-size: 30px;
 `;
 
-export const Subtitle = styled.div`
-  display: flex;
-  justify-content: space-between;
+export const SubtitleContainer = styled.div`
   font-size: 20px;
 `;
