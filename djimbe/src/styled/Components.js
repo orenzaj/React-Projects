@@ -36,8 +36,9 @@ export const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 90%;
   height: 100%;
+  border: 1px solid green;
 `;
 
 //////////////////////////////////////////////////
@@ -46,19 +47,15 @@ export const MainContainer = styled.div`
 export const BeatContainer = styled.div`
   display: flex;
   flex: 1;
-  width: 90%;
-  border: 1px solid green;
-  border-bottom: none;
+  width: 100%;
 `;
 export const ToggleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 5%;
-  border: 1px solid green;
   border-top: ${props => (props.isShowing ? "1px solid green" : "none")};
-  border-bottom: ${props => (props.isShowing ? "none" : "1px solid green")};
 `;
 
 //////////////////////////////////////////////////
@@ -68,10 +65,8 @@ export const SoundContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
   height: 40%;
-  border: 1px solid green;
-  border-top: none;
 `;
 export const CardContainer = styled.div`
   display: flex;
@@ -85,8 +80,8 @@ export const Card = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: 1px solid lightblue;
 `;
 export const NavContainer = styled.div`
