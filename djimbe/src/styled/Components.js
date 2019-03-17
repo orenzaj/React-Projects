@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-//////////////////////////////////////////////////
-// App //
-//////////////////////////////////////////////////
+// App
 export const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,9 +10,7 @@ export const AppContainer = styled.div`
   box-shadow: 5px 5px 5px #888777;
 `;
 
-//////////////////////////////////////////////////
 // SongComponent;
-//////////////////////////////////////////////////
 export const SongContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,9 +24,7 @@ export const SubtitleContainer = styled.div`
   font-size: 20px;
 `;
 
-//////////////////////////////////////////////////
 // Main Component
-//////////////////////////////////////////////////
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,13 +35,26 @@ export const MainContainer = styled.div`
   border: 1px solid green;
 `;
 
-//////////////////////////////////////////////////
 // Beat Component
-//////////////////////////////////////////////////
 export const BeatContainer = styled.div`
   display: flex;
+  flex-direction: column;
   flex: 1;
   width: 100%;
+`;
+export const sortableList = {
+  display: "flex",
+  flexDirection: "column",
+  flex: "1",
+  width: "100%"
+};
+export const AddButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 50px;
+  border-radius: 50%;
 `;
 export const ToggleContainer = styled.div`
   display: flex;
@@ -58,9 +65,7 @@ export const ToggleContainer = styled.div`
   border-top: ${props => (props.isShowing ? "1px solid green" : "none")};
 `;
 
-//////////////////////////////////////////////////
 // Sound Component
-//////////////////////////////////////////////////
 export const SoundContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,7 +78,6 @@ export const CardContainer = styled.div`
   flex: 1;
   justify-content: center;
   align-items: center;
-  width: 100%;
 `;
 export const Card = styled.div`
   display: flex;

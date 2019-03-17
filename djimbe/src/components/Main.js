@@ -5,7 +5,7 @@ import { MainContainer } from "../styled/Components";
 
 const Main = () => {
   return (
-    <MainContainer>
+    <MainContainer className="main_container">
       <Beat />
       <Sound />
     </MainContainer>

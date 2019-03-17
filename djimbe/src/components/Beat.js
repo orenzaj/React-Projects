@@ -1,14 +1,33 @@
-import React, { useState } from "react";
-import Cards from "./Cards";
-import { BeatContainer } from "../styled/Components";
+import React from "react";
+import { CardContainer, BeatContainer, Card } from "../styled/Components";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import arrayMove from "array-move";
 
-const Beat = () => {
-  const cards = ["card 1", "card 2"];
+const SortableItem = SortableElement(({ value }) => <Card>{value}</Card>);
+
+const helperContainer = document.getElementsByClassName("beat_container")[0];
+const SortableList = SortableContainer(({ cards }) => {
   return (
-    <BeatContainer>
-      <Cards cards={cards} />
-      <button className="add_row" />
-    </BeatContainer>
+    <CardContainer className="beat_container">
+      {cards.map((value, index) => (
+        <SortableItem key={`card-${index}`} index={index} value={value} />
+      ))}
+    </CardContainer>
+  );
+});
+
+const Beat = props => {
+  const [cards, setCards] = React.useState(["Shekere", "Drum", "Tubano"]);
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setCards(arrayMove(cards, oldIndex, newIndex));
+  };
+  return (
+    <SortableList
+      cards={cards}
+      onSortEnd={onSortEnd}
+      axis="x"
+      helperContainer={helperContainer}
+    />
   );
 };
 

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import Cards from "./Cards";
+import { CardContainer, Card } from "../styled/Components";
 import {
   ToggleContainer,
   SoundContainer,
   NavContainer
 } from "../styled/Components";
+import Beat from "./Beat";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import arrayMove from "array-move";
 
 const Nav = props => {
   const { noteValue, changeNoteValue, numberOfButtons } = props;
@@ -32,6 +35,17 @@ const Toggle = props => {
   );
 };
 
+const SortableItem = SortableElement(({ value }) => <Card>{value}</Card>);
+const SortableList = SortableContainer(({ cards }) => {
+  return (
+    <CardContainer className="sound_container">
+      {cards.map((value, index) => (
+        <SortableItem key={`card-${index}`} index={index} value={value} />
+      ))}
+    </CardContainer>
+  );
+});
+
 const Sound = () => {
   const [isShowing, showSound] = useState(false);
   const cardsMap = {
@@ -41,6 +55,11 @@ const Sound = () => {
     4: ["card 7", "card 8"]
   };
   const [noteValue, changeNoteValue] = useState(1);
+  const [cards, setCards] = useState(cardsMap[noteValue]);
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setCards(arrayMove(cards, oldIndex, newIndex));
+  };
+  const helperContainer = document.getElementsByClassName("beat_container")[0];
   return isShowing ? (
     <>
       <Toggle
@@ -49,7 +68,12 @@ const Sound = () => {
         showSound={showSound}
       />
       <SoundContainer className="sound_container">
-        <Cards cards={cardsMap[noteValue]} />
+        <SortableList
+          cards={cards}
+          onSortEnd={onSortEnd}
+          axis="x"
+          helperContainer={helperContainer}
+        />
         <Nav
           noteValue={noteValue}
           changeNoteValue={changeNoteValue}
