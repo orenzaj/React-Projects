@@ -1,34 +1,24 @@
 import React from "react";
-import { CardContainer, BeatContainer, Card } from "../styled/Components";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import arrayMove from "array-move";
+import { Droppable } from "react-beautiful-dnd";
+import { BeatContainer } from "../styled/Components";
+import { Cards } from "./Cards";
 
-const SortableItem = SortableElement(({ value }) => <Card>{value}</Card>);
-
-const helperContainer = document.getElementsByClassName("beat_container")[0];
-const SortableList = SortableContainer(({ cards }) => {
+export const DroppableBeats = props => {
+  const { beatCards } = props;
   return (
-    <CardContainer className="beat_container">
-      {cards.map((value, index) => (
-        <SortableItem key={`card-${index}`} index={index} value={value} />
-      ))}
-    </CardContainer>
-  );
-});
-
-const Beat = props => {
-  const [cards, setCards] = React.useState(["Shekere", "Drum", "Tubano"]);
-  const onSortEnd = ({ oldIndex, newIndex }) => {
-    setCards(arrayMove(cards, oldIndex, newIndex));
-  };
-  return (
-    <SortableList
-      cards={cards}
-      onSortEnd={onSortEnd}
-      axis="x"
-      helperContainer={helperContainer}
-    />
+    <Droppable droppableId="droppable-1" direction="horizontal">
+      {(provided, snapshot) => {
+        return (
+          <BeatContainer
+            className="card_container"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <Cards cards={beatCards} />
+            {provided.placeholder}
+          </BeatContainer>
+        );
+      }}
+    </Droppable>
   );
 };
-
-export default Beat;

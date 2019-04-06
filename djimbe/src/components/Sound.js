@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import { CardContainer, Card } from "../styled/Components";
-import {
-  ToggleContainer,
-  SoundContainer,
-  NavContainer
-} from "../styled/Components";
-import Beat from "./Beat";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import arrayMove from "array-move";
+import React from "react";
+import { Droppable } from "react-beautiful-dnd";
+import { SoundContainer, NavContainer } from "../styled/Components";
+import { Cards } from "./Cards";
+import { getList, cardList } from "../constants/Items";
 
 const Nav = props => {
-  const { noteValue, changeNoteValue, numberOfButtons } = props;
+  const { noteValue, changeNoteValue, numberOfButtons, setSoundCards } = props;
+  const handleClick = (event, value) => {
+    changeNoteValue(value);
+  };
   let buttons = [];
   for (let i = 1; i <= numberOfButtons; i++) {
     const isActive = i === noteValue ? "btn btn-active" : "btn btn-secondary";
     buttons.push(
-      <button key={i} className={isActive} onClick={() => changeNoteValue(i)}>
+      <button
+        key={i}
+        className={isActive}
+        onClick={i => {
+          handleClick(i);
+        }}
+      >
         {i}
       </button>
     );
@@ -23,67 +27,38 @@ const Nav = props => {
   return <NavContainer className="nav_container">{buttons}</NavContainer>;
 };
 
-const Toggle = props => {
-  const { isShowing, showSound } = props;
-  const arrow = isShowing ? "fa fa-caret-down" : "fa fa-caret-up";
-  return (
-    <ToggleContainer
-      className={arrow}
-      onClick={() => showSound(!isShowing)}
-      isShowing={isShowing}
-    />
-  );
-};
-
-const SortableItem = SortableElement(({ value }) => <Card>{value}</Card>);
-const SortableList = SortableContainer(({ cards }) => {
-  return (
-    <CardContainer className="sound_container">
-      {cards.map((value, index) => (
-        <SortableItem key={`card-${index}`} index={index} value={value} />
-      ))}
-    </CardContainer>
-  );
-});
-
-const Sound = () => {
-  const [isShowing, showSound] = useState(false);
-  const cardsMap = {
-    1: ["card 1", "card 2"],
-    2: ["card 3", "card 4"],
-    3: ["card 5", "card 6"],
-    4: ["card 7", "card 8"]
-  };
-  const [noteValue, changeNoteValue] = useState(1);
-  const [cards, setCards] = useState(cardsMap[noteValue]);
-  const onSortEnd = ({ oldIndex, newIndex }) => {
-    setCards(arrayMove(cards, oldIndex, newIndex));
-  };
-  const helperContainer = document.getElementsByClassName("beat_container")[0];
+const DroppableSounds = props => {
+  const {
+    isShowing,
+    noteValue,
+    changeNoteValue,
+    numberOfButtons,
+    soundCards,
+    setSoundCards
+  } = props;
   return isShowing ? (
-    <>
-      <Toggle
-        className="toggle_container"
-        isShowing={isShowing}
-        showSound={showSound}
-      />
-      <SoundContainer className="sound_container">
-        <SortableList
-          cards={cards}
-          onSortEnd={onSortEnd}
-          axis="x"
-          helperContainer={helperContainer}
-        />
-        <Nav
-          noteValue={noteValue}
-          changeNoteValue={changeNoteValue}
-          numberOfButtons={Object.keys(cardsMap).length}
-        />
-      </SoundContainer>
-    </>
+    <Droppable droppableId="droppable-2">
+      {(provided, snapshot) => (
+        <SoundContainer
+          className="sound_container"
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          <Cards cards={soundCards} />
+          <Nav
+            className="nav_container"
+            noteValue={noteValue}
+            setSoundCards={setSoundCards}
+            changeNoteValue={changeNoteValue}
+            numberOfButtons={numberOfButtons}
+          />
+          {provided.placeholder}
+        </SoundContainer>
+      )}
+    </Droppable>
   ) : (
-    <Toggle isShowing={isShowing} showSound={showSound} />
+    []
   );
 };
 
-export default Sound;
+export default DroppableSounds;

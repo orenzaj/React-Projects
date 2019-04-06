@@ -1,15 +1,29 @@
 import React from "react";
-import { CardContainer, Card } from "../styled/Components";
+import { CardContainer, Card, CardClone } from "../styled/Components";
+import { Draggable } from "react-beautiful-dnd";
 
-const Cards = props => {
+export const Cards = props => {
   const { cards } = props;
   return (
-    <CardContainer>
+    <CardContainer className="card_container">
       {cards.map((card, index) => {
-        return <Card key={index}> {card} </Card>;
+        return (
+          <Draggable key={card.id} draggableId={card.id} index={index}>
+            {(provided, snapshot) => (
+              <>
+                <Card
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                >
+                  {card.content}
+                </Card>
+                {snapshot.isDragging && <CardClone>{card.content}</CardClone>}
+              </>
+            )}
+          </Draggable>
+        );
       })}
     </CardContainer>
   );
 };
-
-export default Cards;

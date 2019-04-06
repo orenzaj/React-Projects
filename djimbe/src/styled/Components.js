@@ -94,3 +94,8 @@ export const NavContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const CardClone = styled(Card)`
+  div {
+    display: none !important;
+  }
+`;
